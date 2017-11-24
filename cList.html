@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>公司列表</title>
+    <link rel="stylesheet" href="Semantic/semantic.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="angular-1.6.6/angular.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="Semantic/semantic.min.js"></script>
+</head>
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        <p>
+            <h2>公司列表</h2><br>
+            <div class="ui icon input">
+                <input type="text" placeholder="搜索..." ng-model="test">
+                <i class="ui search icon"></i>
+            </div>
+        </p>
+        <table class="ui celled table">
+            <thead>
+                <tr>
+                    <th>国家</th>
+                    <th>公司</th>
+                    <th>地址</th>
+                    <th>邮箱</th>
+                    <th>电话</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in companies | filter:test">
+                    <td>{{ x.country }}</td>
+                    <td>{{ x.name }}</td>
+                    <td>{{ x.address }}</td>
+                    <td>{{ x.email }}</td>
+                    <td>{{ x.tel }}</td>
+                    <td>
+                        <button class="ui inverted blue button" ng-click="controller.update($index)">修改</button>
+                        <button class="ui inverted red button" ng-click="controller.del($index)">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot class="full-width">
+                    <tr>
+                      <th></th>
+                      <th colspan="5">
+                        <div class="ui right floated small primary labeled icon button" ng-click="controller.add()">
+                          <i class="plus icon"></i>添加公司
+                        </div>
+                      </th>
+                    </tr>
+                  </tfoot>
+        </table>
+
+        <div id="modal-1" class="ui modal">
+            <i class="close icon"></i>
+            <div class="header">
+                {{ controller.state }}
+            </div>
+            <div class="content">
+                <div class="description">
+                    <form class="ui form">
+                        <div class="field">
+                            <label>国家</label>
+                            <div class="two fields">
+                                <div class="field">
+                                    <div class="field">
+                                        <select ng-model="info.country" class="ui fluid dropdown">
+                                            <option value="">所属国家</option>
+                                            <option value="中国">中国</option>
+                                            <option value="美国">美国</option>
+                                           <option value="日本">日本</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <input type="text" ng-model="info.name"  placeholder="公司名">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="field">
+                                <label>地址</label>
+                                    <input type="text" ng-model="info.address" placeholder="地址">
+                            </div>
+                            <div class="field">
+                                <label>联系方式</label>
+                                <div class="two fields">
+                                    <div class="field">
+                                        <input type="email" ng-model="info.email"  placeholder="邮箱">
+                                            <span></span>
+                                    </div>
+                                    <div class="field">
+                                        <input type="text" ng-model="info.tel"  placeholder="电话">
+                                    </div>
+                                 </div>
+                            </div>
+                        <div>
+                    </form>
+                </div>
+            </div>
+            </div>
+            </div>
+            <div class="actions">
+                <div class="ui black deny button" data-dismiss="modal">
+                    取消
+                </div>
+                <div class="ui positive right labeled icon button" ng-click="controller.save()">
+                    确认并保存
+                    <i class="checkmark icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/cList.js"></script>
+</body>
+</html>
