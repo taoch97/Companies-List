@@ -1,17 +1,32 @@
 <div ng-controller="myCtrl">
     <div class="ui icon input">
         <input type="text" placeholder="Search..." ng-model="test">
-        <i class="search link icon"></i>
+        <i ng-show="search" class="search link icon"></i>
+        <i ng-show="!search" ng-click="controller.remove()" class="remove link icon"></i>
     </div>
     <table class="ui celled table">
         <thead>
             <tr>
-                <th>国家<i class="sort icon" ng-click="controller.sortList('country')"></i></th>
-                <th>公司<i class="sort icon" ng-click="controller.sortList('name')"></i></th>
-                <th>地址<i class="sort icon" ng-click="controller.sortList('address')"></i></th>
-                <th>邮箱<i class="sort icon" ng-click="controller.sortList('email')"></i></th>
-                <th>电话<i class="sort icon" ng-click="controller.sortList('tel')"></i>
-</th>
+                <th ng-click="controller.sortList('country')">
+                    <span class="pointer">国家</span>
+                    <i ng-class="{'sort ascending icon': !controller.desc,'sort descending icon': controller.desc}"></i>
+                </th>
+                <th ng-click="controller.sortList('name')">
+                    <span class="pointer">公司</span>
+                    <i class="sort icon"></i>
+                </th>
+                <th ng-click="controller.sortList('address')">
+                    <span class="pointer">地址</span>
+                    <i class="sort icon"></i>
+                </th>
+                <th ng-click="controller.sortList('email')">
+                    <span class="pointer">邮箱</span>
+                    <i class="sort icon"></i>
+                </th>
+                <th ng-click="controller.sortList('tel')">
+                    <span class="pointer">电话</span>
+                    <i class="sort icon"></i>
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -30,12 +45,12 @@
         </tbody>
         <tfoot class="full-width">
             <tr>
-            <th></th>
-            <th colspan="5">
-                <div class="ui right floated small primary labeled icon button" ng-click="controller.add()">
-                <i class="plus icon"></i>添加公司
-                </div>
-            </th>
+                <th></th>
+                <th colspan="5">
+                    <div class="ui right floated small primary labeled icon button" ng-click="controller.add()">
+                        <i class="plus icon"></i>添加公司
+                    </div>
+                </th>
             </tr>
         </tfoot>
     </table>
@@ -53,50 +68,43 @@
                         <div class="two fields">
                             <div class="field">
                                 <div class="field">
-                                    <select ng-model="info.country" class="ui fluid dropdown">
+                                    <select ng-model="info.country" name="country" class="ui fluid dropdown">
                                         <option value="">所属国家</option>
-                                        <option value="中国">中国</option>
-                                        <option value="美国">美国</option>
-                                        <option value="日本">日本</option>
-                                        <option value="德国">德国</option>
-                                        <option value="荷兰">荷兰</option>
-                                        <option value="英国">英国</option>
+                                        <option value="CN">中国</option>
+                                        <option value="US">美国</option>
+                                        <option value="JP">日本</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="field">
-                                <input type="text" ng-model="info.name"  placeholder="公司名">
+                                <input type="text" ng-model="info.name" name="name" placeholder="公司名" required>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="field">
-                            <label>地址</label>
-                                <input type="text" ng-model="info.address" placeholder="地址">
-                        </div>
-                        <div class="field">
-                            <label>联系方式</label>
-                            <div class="two fields">
-                                <div class="field">
-                                    <input type="email" name="email" ng-model="info.email" placeholder="邮箱">
-                                        <span ng-show="myForm.email.$error.email" style="color:red">非法的邮箱！</span>
-                                </div>
-                                <div class="field">
-                                    <input type="text" ng-model="info.tel"  placeholder="电话">
-                                </div>
+                    <div class="field">
+                        <label>地址</label>
+                        <input type="text" ng-model="info.address" name="address" placeholder="地址">
+                    </div>
+                    <div class="field">
+                        <label>联系方式</label>
+                        <div class="two fields">
+                            <div class="field">
+                                <input type="email" name="email" ng-model="info.email" placeholder="邮箱">
+                                <span ng-show="myForm.email.$invalid" style="color:red">非法的邮箱！</span>
+                            </div>
+                            <div class="field">
+                                <input type="text" name="tel" ng-model="info.tel" placeholder="电话">
                             </div>
                         </div>
-                    <div>
+                    </div>
                 </form>
             </div>
-        </div>
-        </div>
         </div>
         <div class="actions">
             <button class="ui black deny button" data-dismiss="modal">
                 取消
             </button>
-            <button ng-disabled="controller.incompleted" class="ui positive right labeled icon button" ng-click="controller.save()">
+            <button ng-disabled="myForm.name.$error.required" class="ui positive right labeled icon button" ng-click="controller.save()">
                 确认并保存
                 <i class="checkmark icon"></i>
             </button>
