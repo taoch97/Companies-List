@@ -71,7 +71,6 @@ myApp.controller('myCtrl', function ($scope) {
     });
     $scope.controller = {
         state: "",
-        completed: false,
         sort: '',
         desc: false,
         del: function ($index) {
@@ -128,4 +127,10 @@ myApp.filter('highlight', function ($sce) {
         return result;
         //return $sce.trustAsHtml(result);
     }
+});
+
+$("#menu_list a").click(function(){
+    $("#menu_list a").removeClass();
+    $("#menu_list a").addClass("item");
+    $(this).addClass("item active");
 });
